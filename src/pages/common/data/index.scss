@@ -1,0 +1,21 @@
+.rm-calendar-schedule-block {
+    position: absolute;
+    border-radius: 2px;
+    cursor: pointer;
+    .rm-calendar-schedule-right {
+        padding-top: 2px;
+        .rm-calendar-schedule-title,
+        .rm-calendar-schedule-location {
+            font-size: 12px;
+            margin-left: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .rm-calendar-schedule-location {
+            font-size: 12px;
+            margin-left: 6px;
+            color: #333;
+        }
+    }
+}

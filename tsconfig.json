@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "outDir": "./dist/",
+      "module": "es6",
+      "target": "es5",
+      "jsx": "react",
+      "allowJs": true,
+      "allowSyntheticDefaultImports": true,
+      "noImplicitAny":false,
+      "moduleResolution": "Node",
+      "baseUrl": "./",
+      "paths": {
+        "rcm-calendar" : ["types/*"]
+      }
+    },
+    "include": [
+        "**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
