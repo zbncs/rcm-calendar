@@ -52,6 +52,7 @@
     {
       "key": "docs/examples.mdx",
       "value": {
+        "name": "examples",
         "id": "a0261923c9f3e006856d399286472d9c",
         "filepath": "docs/examples.mdx",
         "fullpath": "/Users/zhengyima/Desktop/rm-calendar/docs/examples.mdx",
@@ -59,14 +60,8 @@
         "hidden": false,
         "slug": "docs-examples",
         "route": "/docs-examples",
-        "name": "Examples",
         "menu": "",
         "headings": [
-          {
-            "slug": "rcm-calendar",
-            "depth": 1,
-            "value": "rcm-calendar"
-          },
           {
             "slug": "-day",
             "depth": 2,
@@ -301,6 +296,108 @@
       ]
     },
     {
+      "key": "src/pages/day/index.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "day",
+          "methods": [],
+          "props": {
+            "alldayName": {
+              "defaultValue": null,
+              "description": "",
+              "name": "alldayName",
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "renderHeaderTemplate": {
+              "defaultValue": null,
+              "description": "",
+              "name": "renderHeaderTemplate",
+              "required": false,
+              "type": {
+                "name": "(time: Dayjs) => ReactNode"
+              }
+            },
+            "name": {
+              "defaultValue": null,
+              "description": "",
+              "name": "name",
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "isWhichHour": {
+              "defaultValue": null,
+              "description": "",
+              "name": "isWhichHour",
+              "required": true,
+              "type": {
+                "name": "\"12\" | \"24\""
+              }
+            },
+            "schedules": {
+              "defaultValue": null,
+              "description": "",
+              "name": "schedules",
+              "required": true,
+              "type": {
+                "name": "ISedules[]"
+              }
+            },
+            "date": {
+              "defaultValue": null,
+              "description": "",
+              "name": "date",
+              "required": true,
+              "type": {
+                "name": "Dayjs"
+              }
+            },
+            "clickSchedule": {
+              "defaultValue": null,
+              "description": "",
+              "name": "clickSchedule",
+              "required": false,
+              "type": {
+                "name": "(event: MouseEvent<Element, MouseEvent>, schedule: ISedules) => void"
+              }
+            },
+            "clickBlank": {
+              "defaultValue": null,
+              "description": "",
+              "name": "clickBlank",
+              "required": false,
+              "type": {
+                "name": "(event: MouseEvent<Element, MouseEvent>, timeStart: number) => void"
+              }
+            },
+            "dbclickBlank": {
+              "defaultValue": null,
+              "description": "",
+              "name": "dbclickBlank",
+              "required": false,
+              "type": {
+                "name": "(event: MouseEvent<Element, MouseEvent>, timeStart: number) => void"
+              }
+            },
+            "rightMouseClick": {
+              "defaultValue": null,
+              "description": "",
+              "name": "rightMouseClick",
+              "required": false,
+              "type": {
+                "name": "(event: MouseEvent<Element, MouseEvent>, schedule: ISedules) => void"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
       "key": "src/pages/month/index.tsx",
       "value": [
         {
@@ -405,108 +502,6 @@
               "required": false,
               "type": {
                 "name": "(event: MouseEvent<Element, MouseEvent>, schedule: ISedules[]) => void"
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "key": "src/pages/day/index.tsx",
-      "value": [
-        {
-          "description": "",
-          "displayName": "day",
-          "methods": [],
-          "props": {
-            "alldayName": {
-              "defaultValue": null,
-              "description": "",
-              "name": "alldayName",
-              "required": true,
-              "type": {
-                "name": "string"
-              }
-            },
-            "renderHeaderTemplate": {
-              "defaultValue": null,
-              "description": "",
-              "name": "renderHeaderTemplate",
-              "required": false,
-              "type": {
-                "name": "(time: Dayjs) => ReactNode"
-              }
-            },
-            "name": {
-              "defaultValue": null,
-              "description": "",
-              "name": "name",
-              "required": true,
-              "type": {
-                "name": "string"
-              }
-            },
-            "isWhichHour": {
-              "defaultValue": null,
-              "description": "",
-              "name": "isWhichHour",
-              "required": true,
-              "type": {
-                "name": "\"12\" | \"24\""
-              }
-            },
-            "schedules": {
-              "defaultValue": null,
-              "description": "",
-              "name": "schedules",
-              "required": true,
-              "type": {
-                "name": "ISedules[]"
-              }
-            },
-            "date": {
-              "defaultValue": null,
-              "description": "",
-              "name": "date",
-              "required": true,
-              "type": {
-                "name": "Dayjs"
-              }
-            },
-            "clickSchedule": {
-              "defaultValue": null,
-              "description": "",
-              "name": "clickSchedule",
-              "required": false,
-              "type": {
-                "name": "(event: MouseEvent<Element, MouseEvent>, schedule: ISedules) => void"
-              }
-            },
-            "clickBlank": {
-              "defaultValue": null,
-              "description": "",
-              "name": "clickBlank",
-              "required": false,
-              "type": {
-                "name": "(event: MouseEvent<Element, MouseEvent>, timeStart: number) => void"
-              }
-            },
-            "dbclickBlank": {
-              "defaultValue": null,
-              "description": "",
-              "name": "dbclickBlank",
-              "required": false,
-              "type": {
-                "name": "(event: MouseEvent<Element, MouseEvent>, timeStart: number) => void"
-              }
-            },
-            "rightMouseClick": {
-              "defaultValue": null,
-              "description": "",
-              "name": "rightMouseClick",
-              "required": false,
-              "type": {
-                "name": "(event: MouseEvent<Element, MouseEvent>, schedule: ISedules) => void"
               }
             }
           }
