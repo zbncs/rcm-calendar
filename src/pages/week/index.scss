@@ -1,0 +1,97 @@
+$border-color: #e5e5e5;
+.rm-calendar-week-container {
+    width: 100%;
+    min-height: 600px;
+    height: inherit;
+}
+.rm-calendar-week-dayname-container {
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    height: 42px;
+    .rm-calendar-week-dayname {
+        width: calc(100% - 72px);
+        height: 100%;
+        margin-left: 72px;
+        background-color: inherit;
+        text-align: left;
+    }
+    .rm-calendar-week-date-container {
+        display: inline-block;
+        line-height: 42px;
+        height: 100%;
+        width: calc(100% / 7);
+        .rm-calendar-week-date-num {
+            font-size: 26px;
+            color: #333;
+            margin-right: 2px;
+        }
+    }
+    .is-today {
+        background-color: rgba(133, 195, 240, .2);
+        .is-today-num,
+        .is-today-name {
+            color: #0059ff;
+        }
+    }
+}
+.rm-calendar-daygrid-layout {
+    height: 28px;
+    width: 100%;
+    background: #fff;
+    display: flex;
+    border-bottom: 1px solid $border-color;
+    z-index: 999;
+    .rm-calendar-allday-left {
+        width: 74px;
+        height: 100%;
+        position: relative;
+        .rm-calendar-allday-left-text {
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            margin-top: -6px;
+            text-align: end;
+            width: 74px;
+            padding-right: 8px;
+        }
+    }
+    .rm-calendar-allday-right {
+        width: calc(100% - 74px);
+        display: flex;
+        overflow-y: scroll;
+        span.rm-calendar-week-allday-schedules:first-child {
+            display: inline-block;
+            // width: 74px;
+        }
+        span.rm-calendar-week-allday-schedules {
+            display: inline-block;
+            width: calc(100% / 7);
+            border-left: 1px solid $border-color;
+            position: relative;
+            .rm-calendar-week-allday-schedule {
+                position: absolute;
+                width: 100%;
+                .rm-calendar-week-allday-schedule-title {
+                    margin-left: 4px;
+                }
+            }
+            .rm-calendar-week-allday-schedules-num {
+                position: absolute;
+                width: 100%;
+                height: 26px;
+                text-align: center;
+                line-height: 26px;
+                cursor: pointer;
+                .rm-calendar-allday-week-schedules-num-text {
+                    color: skyblue;
+                }
+            }
+        }
+        .is-today {
+            background-color: rgba(133, 195, 240, .2);
+        }
+    }
+}
+
+
+

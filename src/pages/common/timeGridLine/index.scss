@@ -1,0 +1,14 @@
+.rm-calendar-timegrid-right {
+    width: calc(100% - 74px);
+    position: absolute;
+    top: 5px;
+    left: 74px;
+    .rm-calendar-timegrid-grid {
+        .rm-calendar-timegrid-gridline {
+            width: 100%;
+            height: 52px;
+            border-top: 1px solid #e5e5e5;
+            overflow: hidden;
+        }
+    }
+}

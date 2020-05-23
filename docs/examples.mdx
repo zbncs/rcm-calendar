@@ -1,0 +1,171 @@
+---
+name: examples
+---
+
+可以直接引入 Calendar, 也可以单独引入日、周、月视图： DayCalendar、WeekCalendar、MonthCalendar
+
+import { Playground } from 'docz'
+import Calendar, {DayCalendar, WeekCalendar, MonthCalendar} from '../src/index.js'
+import dayjs, { Dayjs } from 'dayjs';
+
+## 📦 day
+
+<Playground>
+    {() => {
+        const data = [
+            {
+            id: '1',
+            calendarId: '123',
+            recurrenceId: '0',
+            title: 'month 1',
+            start: dayjs().startOf('day').unix(),
+            end: dayjs().add(1,'day').startOf('day').unix(),
+            isAllDay: false,
+            location: 'hshdh',
+            attendees: [],
+            color: '#000',
+            bgColor: 'skyblue',
+            borderColor: '#00a9ff',
+            customStyle: '',
+            state: '1',
+            raw: {},
+            },
+            {
+            id: '2',
+            calendarId: '123',
+            recurrenceId: '0',
+            title: 'month 2',
+            start: dayjs().hour(8).unix(),
+            end: dayjs().endOf('day').unix(),
+            isAllDay: false,
+            location: '地点',
+            attendees: [],
+            color: '#000',
+            bgColor: 'skyblue',
+            borderColor: '#00a9ff',
+            customStyle: '',
+            state: '1',
+            raw: {},
+            }
+        ]
+        return (
+             <DayCalendar 
+                date={dayjs()}
+                isWhichHour={"24"}
+                schedules={data}
+            />
+        )
+    }}
+   
+</Playground>
+
+## 📦 Week
+
+<Playground>
+    {() => {
+        const data = [
+            {
+            id: '1',
+            calendarId: '123',
+            recurrenceId: '0',
+            title: 'month 1',
+            start: dayjs().startOf('day').unix(),
+            end: dayjs().add(1,'day').startOf('day').unix(),
+            isAllDay: false,
+            location: 'hshdh',
+            attendees: [],
+            color: '#000',
+            bgColor: 'skyblue',
+            borderColor: '#00a9ff',
+            customStyle: '',
+            state: '1',
+            raw: {},
+            },
+            {
+            id: '2',
+            calendarId: '123',
+            recurrenceId: '0',
+            title: 'month 2',
+            start: dayjs().add(3,'day').startOf('day').unix(),
+            end: dayjs().add(4,'day').startOf('day').unix(),
+            isAllDay: false,
+            location: 'hshdh',
+            attendees: [],
+            color: '#000',
+            bgColor: 'skyblue',
+            borderColor: '#00a9ff',
+            customStyle: '',
+            state: '1',
+            raw: {},
+            }
+        ]
+        return (
+             <Calendar 
+                date={dayjs()}
+                viewType={'week'}
+                isWhichHour={"24"}
+                schedules={data}
+            />
+        )
+    }}
+   
+</Playground>
+
+## 📦 Month
+
+<Playground>
+    {() => {
+        const data = [
+            {
+            id: '1',
+            calendarId: '123',
+            recurrenceId: '0',
+            title: 'month 1',
+            start: dayjs().startOf('day').unix(),
+            end: dayjs().add(1,'day').startOf('day').unix(),
+            isAllDay: false,
+            location: 'hshdh',
+            attendees: [],
+            color: '#000',
+            bgColor: 'skyblue',
+            borderColor: '#00a9ff',
+            customStyle: '',
+            state: '1',
+            raw: {},
+            },
+            {
+            id: '2',
+            calendarId: '123',
+            recurrenceId: '0',
+            title: 'month 2',
+            start: dayjs().add(3,'day').startOf('day').unix(),
+            end: dayjs().add(4,'day').startOf('day').unix(),
+            isAllDay: false,
+            location: 'hshdh',
+            attendees: [],
+            color: '#000',
+            bgColor: 'skyblue',
+            borderColor: '#00a9ff',
+            customStyle: '',
+            state: '1',
+            raw: {},
+            }
+        ]
+        return (
+             <MonthCalendar 
+                date={dayjs()}
+                viewType={'week'}
+                isWhichHour={"24"}
+                schedules={data}
+                isVisibleSolar2lunar={true}
+            />
+        )
+    }}
+   
+</Playground>
+
+
+
+
+
+

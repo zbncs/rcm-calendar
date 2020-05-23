@@ -1,0 +1,58 @@
+{
+  "name": "rcm-calendar",
+  "version": "1.0.0",
+  "description": "react calendar",
+  "main": "dist/bundle.js",
+  "private": false,
+  "typings": "./types/index.d.ts",
+  "scripts": {
+    "build": "webpack --env.NODE_ENV=production",
+    "dev": "webpack-dev-server",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build",
+    "docz:serve": "docz build && docz serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mzyyangyang1/rm-calendar.git"
+  },
+  "author": "yangyangma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mzyyangyang1/rm-calendar/issues"
+  },
+  "homepage": "https://github.com/mzyyangyang1/rm-calendar#readme",
+  "dependencies": {
+    "@types/classnames": "^2.2.10",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "classnames": "^2.2.6",
+    "dayjs": "^1.8.25",
+    "docz": "^2.3.1",
+    "gatsby-plugin-sass": "^2.3.1",
+    "node-sass": "^4.14.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "solarlunar": "^2.0.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.3",
+    "eslint": "^6.8.0",
+    "eslint-loader": "^4.0.2",
+    "html-webpack-plugin": "^4.2.0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.0",
+    "ts-loader": "^7.0.1",
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "webpack-node-externals": "^1.7.2"
+  }
+}

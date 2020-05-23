@@ -1,0 +1,10 @@
+.rm-calendar-timegrid-time {
+    width: 66px;
+    text-align: end;
+    margin-right: 8px;
+    position: relative;
+    .rm-calendar-timegrid-hour {
+        height: 52px;
+        color: #bbb;
+    }
+}
