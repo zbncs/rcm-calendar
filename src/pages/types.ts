@@ -1,16 +1,15 @@
 import { Dayjs } from "dayjs";
 
 export interface ISedules {
-    id: string;
-    calendarId: string;
-    recurrenceId: string;
+    id?: string;
+    calendarId?: string;
+    recurrenceId?: string;
     title: string;
     start: number;
     end: number;
     isAllDay: boolean;
     location: string;
-    attendees: any[];
-    isReadOnly: boolean;
+    attendees?: any[];
     color: string;
     bgColor: string;
     borderColor: string;
@@ -49,9 +48,13 @@ export interface ICalendarProps {
      */
     isVisibleSolar2lunar?: boolean;
     /**
+     * 日视图或者周视图的全天名称
+     */
+    alldayName?: string;
+    /**
      * 月视图头部的自定义
      */
-    monthHeaderTemplate?: (time: Dayjs) => React.ReactNode;
+    renderHeaderTemplate?: (time: Dayjs) => React.ReactNode;
     /**
      * 点击日程事件
      */
@@ -74,7 +77,7 @@ export interface ICalendarProps {
     monthClickMore?: (event: React.MouseEvent, schedule: ISedules[]) => void;
 }
 
-export interface IDayProps {
+interface ISameProps {
     readonly name: string;
     isWhichHour: '12' | '24';
     schedules: Array<ISedules>;
@@ -85,6 +88,11 @@ export interface IDayProps {
     rightMouseClick?: (event: React.MouseEvent, schedule: ISedules) => void;
 }
 
+export interface IDayProps extends ISameProps {
+    alldayName: string;
+    renderHeaderTemplate?: (time: Dayjs) => React.ReactNode;
+}
+
 export interface IWeekProps extends IDayProps {}
 
 export interface IMonthProps {
@@ -93,7 +101,7 @@ export interface IMonthProps {
     schedules?: Array<ISedules>;
     monthVisibleWeeksCount: number;
     isVisibleSolar2lunar?: boolean;
-    monthHeaderTemplate?: (time: Dayjs) => React.ReactNode;
+    renderHeaderTemplate?: (time: Dayjs) => React.ReactNode;
     clickSchedule?: (event: React.MouseEvent, schedule: ISedules) => void;
     rightMouseClick?: (event: React.MouseEvent, schedule: ISedules) => void;
     clickBlank?: (event: React.MouseEvent, timeStart: number) => void;
@@ -105,7 +113,7 @@ export interface ITimeGridProps {
     isWhichHour: '12' | '24';
 }
 
-export interface ITimeGridLineProps extends IDayProps {
+export interface ITimeGridLineProps extends ISameProps {
     // readonly name: string;
     // schedules: Array<ISedules>;
     // date: Dayjs;
@@ -115,7 +123,7 @@ export interface ITimeGridLineProps extends IDayProps {
     // rightMouseClick?: (event: React.MouseEvent, schedule: ISedules) => void;
 }
 
-export interface ICommonProps extends IDayProps {
+export interface ICommonProps extends ISameProps {
     // isWhichHour: '12' | '24';
     // schedules: Array<ISedules>;
     // date: Dayjs;

@@ -14,16 +14,17 @@ export default function Calendar(props: ICalendarProps) {
         viewType,
         isWhichHour,
         schedules,
+        alldayName,
         monthVisibleWeeksCount,
         isVisibleSolar2lunar,
         clickSchedule,
         clickBlank,
         dbclickBlank,
         rightMouseClick,
-        monthHeaderTemplate,
         monthClickMore,
+        renderHeaderTemplate,
     } = props;
-
+    
     const getViewType = (type: string) => {
         switch(type) {
             case 'day':
@@ -35,6 +36,7 @@ export default function Calendar(props: ICalendarProps) {
                             clickBlank={clickBlank}
                             dbclickBlank={dbclickBlank}
                             rightMouseClick={rightMouseClick}
+                            renderHeaderTemplate={renderHeaderTemplate}
                         />;
             case 'week':
                 return <Week 
@@ -46,6 +48,7 @@ export default function Calendar(props: ICalendarProps) {
                             clickBlank={clickBlank}
                             dbclickBlank={dbclickBlank}
                             rightMouseClick={rightMouseClick}
+                            renderHeaderTemplate={renderHeaderTemplate}
                        />;
             case 'month':
                 return <Month 
@@ -54,7 +57,7 @@ export default function Calendar(props: ICalendarProps) {
                             schedules={schedules}
                             monthVisibleWeeksCount={monthVisibleWeeksCount}
                             isVisibleSolar2lunar={isVisibleSolar2lunar}
-                            monthHeaderTemplate={monthHeaderTemplate}
+                            renderHeaderTemplate={renderHeaderTemplate}
                             clickSchedule={clickSchedule}
                             rightMouseClick={rightMouseClick}
                             clickBlank={clickBlank}
@@ -63,6 +66,7 @@ export default function Calendar(props: ICalendarProps) {
                         />;
         }
     }
+    
     return (
         <div className="rm-calendar-container">
             {

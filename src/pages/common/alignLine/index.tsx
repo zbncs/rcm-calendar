@@ -2,10 +2,11 @@ import React from 'react';
 import {getWeekDate} from '../../utils/weekDate';
 import {IAlignLineProps} from '../../types';
 import SchedulesData from '../data/index';
+import c from 'classnames';
 
 // css
 import './index.scss';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 export default function AlignSchedulesLine(props: IAlignLineProps) {
     const {
@@ -38,8 +39,11 @@ export default function AlignSchedulesLine(props: IAlignLineProps) {
         <div className="rm-calendar-timegrid-schedules-alignlines">
             {
                 weeDateArr.map((item, index) => {
+                    const cls = c('rm-calendar-timegrid-align-item', {
+                        'is-today': item.startOf('day').unix() === dayjs().startOf('day').unix()
+                    })
                     return (
-                        <div className="rm-calendar-timegrid-align-item"
+                        <div className={cls}
                             key={index}
                             onClick={(e) => handleBlank(e, item, 'click')}
                             onDoubleClick={(e) => handleBlank(e, item, 'dbclick')}

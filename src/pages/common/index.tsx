@@ -18,12 +18,13 @@ export default function Common(props: ICommonProps) {
         dbclickBlank,
         rightMouseClick,
     } = props;
+
     const totalHeight = 52 * 24; // 总高度
     const dayMinute = 24 * 60; // 一天的总分钟数
     const [currentTime, setCurrentTime] = useState(dayjs());
     const scrollRef = useRef(null);
-    // 时刻周的每天的宽度
-    const [dayWidth, setDayWidth] = useState<number>(0);
+    // 第几天
+    const [hasDay, setHasDay] = useState<number>(0);
     // 时刻线的位置
     const top = totalHeight / dayMinute * (currentTime.hour() * 60 + currentTime.minute());
     useEffect(() => {
@@ -31,14 +32,15 @@ export default function Common(props: ICommonProps) {
             setCurrentTime(dayjs());
            }, 1000)
            if (scrollRef.current) {
-               // 左侧时间的间距和每天的border
-                const leftWidth = 74 + 7; 
-                // 每一天的宽度
-                const dWidth = ((scrollRef.current! as any).getBoundingClientRect().width - 74) / 7;
-                // 几天是本周的第几天
-                const nowDate = dayjs().day() + 1;
+                // 定位到当前时刻
                 (scrollRef.current! as any).scrollTop = top - 307;
-                setDayWidth(dWidth * nowDate - leftWidth);
+                if (name === 'week') {
+                    setHasDay(dayjs().day());
+                }
+                else {
+                    setHasDay(0);
+                }
+                
            }
            return () => {
                clearInterval(timer)
@@ -65,7 +67,7 @@ export default function Common(props: ICommonProps) {
                 style={{top: top}}
             >
                 <div className="rm-calendar-timegrid-guide-number">{currentTime.format('HH:mm')}</div>
-                <div className="rm-calendar-timegrid-guide-line-today" style={{left: `${dayWidth}px`}}></div>
+                <div className="rm-calendar-timegrid-guide-line-today" style={{left: `calc(${(100 / 7 * hasDay)}% + 74px)`}}></div>
                 <div className="rm-calendar-timegrid-guide-line"></div>
             </div>
         </div>

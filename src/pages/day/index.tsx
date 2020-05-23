@@ -9,7 +9,8 @@ import './index.scss';
 Day.defaultProps = {
     isWhichHour: "24",
     date: dayjs(),
-    name: 'day'
+    name: 'day',
+    alldayName: '全天'
 }
 
 let moreTop: number = 0;
@@ -21,12 +22,14 @@ export default function Day(props: IDayProps) {
         isWhichHour,
         schedules,
         date,
+        alldayName,
         clickSchedule,
         clickBlank,
         dbclickBlank,
         rightMouseClick,
+        renderHeaderTemplate,
     }  = props;
-
+    
     const [alldaySchedules, setAlldaySchedules] = useState<ISedules[]>([]);
     const [notAlldaySchedules, setNotAlldaySchedules] = useState<ISedules[]>([]);
     const [isShowMoreSchedules, setIsShowMoreSchedules] = useState<boolean>(false);
@@ -78,12 +81,17 @@ export default function Day(props: IDayProps) {
                     <span className="rm-calendar-day-date-name">
                         {IDay[date.day()]}
                     </span>
+                    {
+                        renderHeaderTemplate && renderHeaderTemplate(dayjs())
+                    }
                 </span>
             </div>
             {
                 !!alldaySchedules.length && <div className="rm-calendar-allday" style={{height: renderAlldayHeight()}}>
                     <span className="rm-calendar-allday-text-container">
-                        <span className="rm-calendar-allday-text">全天</span>
+                        <span className="rm-calendar-allday-text">
+                            {alldayName}
+                        </span>
                     </span>
                     <span className="rm-calendar-allday-schedules">
                         {

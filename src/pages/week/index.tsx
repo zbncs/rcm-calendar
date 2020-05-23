@@ -3,12 +3,14 @@ import { IWeekProps, IDay, ISedules } from '../types';
 import {getWeekDate} from '../utils/weekDate';
 import Common from '../common/index';
 import dayjs from 'dayjs';
+import c from 'classnames';
 
 // css
 import './index.scss';
 
 Week.defaultProps = {
-    name: 'week'
+    name: 'week',
+    alldayName: '全天'
 }
 let moreTop: number = 0;
 export default function Week(props: IWeekProps) {
@@ -20,10 +22,12 @@ export default function Week(props: IWeekProps) {
         date,
         schedules,
         isWhichHour,
+        alldayName,
         clickBlank,
         clickSchedule,
         dbclickBlank,
-        rightMouseClick
+        rightMouseClick,
+        renderHeaderTemplate,
     } = props;
     const weeDateArr = date && getWeekDate(date);
     const weekdayStart = date.startOf('week').unix();
@@ -97,36 +101,51 @@ export default function Week(props: IWeekProps) {
                 <div className="rm-calendar-week-dayname">
                     {
                         weeDateArr.map((item, index) => {
+                            const clsContain = c('rm-calendar-week-date-container', {
+                                'is-today': item.startOf('day').unix() === dayjs().startOf('day').unix()
+                            })
+                            const clsNum = c('rm-calendar-week-date-num', {
+                                'is-today-num': item.startOf('day').unix() === dayjs().startOf('day').unix()
+                            })
+                            const clsName = c('rm-calendar-week-date-name', {
+                                'is-today-name': item.startOf('day').unix() === dayjs().startOf('day').unix()
+                            })
                             return (
-                                <span className="rm-calendar-week-date-container" key={index}>
-                                    <span className="rm-calendar-week-date-num">
+                                <span className={clsContain} key={index}>
+                                    <span className={clsNum}>
                                         {item.date()}
                                     </span>
-                                    <span className="rm-calendar-week-date-name">
+                                    <span className={clsName}>
                                         {IDay[item.day()]}
                                     </span>
+                                    {
+                                        renderHeaderTemplate && renderHeaderTemplate(item)
+                                    }
                                 </span>
                             )
                         })
                     }
                 </div>
             </div>
-            <div className="rm-calendar-daygrid-layout" style={{height: getWeekAlldayHeight()}}>
+            {weekAlldaySchedules.length !== 0 && <div className="rm-calendar-daygrid-layout" style={{height: getWeekAlldayHeight()}}>
                 <div className="rm-calendar-allday-left">
-                    <span className="rm-calendar-allday-left-text">all day</span>
+                    <span className="rm-calendar-allday-left-text">{alldayName}</span>
                 </div>
-                {alldaySchedules.length !== 0 && <div className="rm-calendar-allday-right">
+                <div className="rm-calendar-allday-right">
                     {
                         weeDateArr.map((itemDate, index) => {
                             const dayStart = itemDate.startOf('day').unix();
                             const dayEnd = itemDate.endOf('day').add(1, 'second').unix();
                             let sameTimeNum = 0;
+                            const cls = c('rm-calendar-week-allday-schedules', {
+                                'is-today': itemDate.startOf('day').unix() === dayjs().startOf('day').unix()
+                            })
                             return (
                                 <span 
                                     key={index}
                                     onClick={(e) => handleBlank(e, itemDate.unix(), 'click')}
                                     onDoubleClick={(e) => handleBlank(e, itemDate.unix(), 'dbclick')}
-                                    className="rm-calendar-week-allday-schedules"
+                                    className={cls}
                                 >
                                     {
                                         alldaySchedules.map((item, index) => {
@@ -184,8 +203,8 @@ export default function Week(props: IWeekProps) {
                             )
                         })
                     }
-                </div>}
-            </div>
+                </div>
+            </div>}
             <Common 
                 name={name}
                 date={date} 

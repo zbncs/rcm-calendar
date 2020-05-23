@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import {IMonthProps, IDay, ISedules} from '../types';
 import {getMonthDate} from '../utils/weekDate';
 import dayjs, { Dayjs } from 'dayjs';
@@ -19,7 +19,7 @@ export default function Month(props: IMonthProps) {
         schedules,
         monthVisibleWeeksCount,
         isVisibleSolar2lunar,
-        monthHeaderTemplate,
+        renderHeaderTemplate,
         clickSchedule,
         rightMouseClick,
         clickBlank,
@@ -159,7 +159,7 @@ export default function Month(props: IMonthProps) {
                                                 {/* 月视图自定义头部 */}
                                                 <span className="rm-calendar-month-week-item-header-holiday">
                                                     {
-                                                        monthHeaderTemplate && monthHeaderTemplate(dayItem)
+                                                        renderHeaderTemplate && renderHeaderTemplate(dayItem)
                                                     }
                                                 </span>
                                             </div>

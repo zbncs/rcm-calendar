@@ -1,7 +1,10 @@
 node_modules
 src
-public
 webpack.config.js
 tsconfig.json
 .babelrc
-
+.docz
+docs
+.gitignore
+doczrc.js
+gatsby-config.js
