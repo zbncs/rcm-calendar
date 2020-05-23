@@ -1,3 +1,5 @@
 export default {
-    typescript: true
+    typescript: true,
+    dest: '/docz',
+    base: '/docz',
   }

@@ -3,12 +3,14 @@
     "title": "Rcm Calendar",
     "description": "react calendar",
     "menu": [],
-    "version": "0.2.0",
+    "version": "0.3.0",
     "repository": "https://github.com/mzyyangyang1/rm-calendar",
     "native": false,
     "themeConfig": {},
     "separator": "-",
-    "typescript": true
+    "typescript": true,
+    "dest": "/docz",
+    "base": "/docz"
   },
   "entries": [
     {

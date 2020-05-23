@@ -16,7 +16,7 @@ if (hasGatsbyConfig) {
 }
 
 const config = {
-  pathPrefix: '/',
+  pathPrefix: '/docz',
 
   siteMetadata: {
     title: 'Rcm Calendar',
@@ -54,12 +54,12 @@ const config = {
         open: null,
         'open-browser': null,
         root: '/Users/zhengyima/Desktop/rm-calendar/.docz',
-        base: '/',
+        base: '/docz',
         source: './',
         'gatsby-root': null,
         files: '**/*.{md,markdown,mdx}',
         public: '/public',
-        dest: '.docz/dist',
+        dest: '/docz',
         d: '.docz/dist',
         editBranch: 'master',
         eb: 'master',
@@ -68,7 +68,7 @@ const config = {
         title: 'Rcm Calendar',
         description: 'react calendar',
         host: 'localhost',
-        port: 3001,
+        port: 3000,
         p: 3000,
         separator: '-',
         paths: {
