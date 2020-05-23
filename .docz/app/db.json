@@ -53,13 +53,13 @@
       "key": "docs/examples.mdx",
       "value": {
         "name": "examples",
+        "route": "rcm-calendar/docs-examples/",
         "id": "a0261923c9f3e006856d399286472d9c",
         "filepath": "docs/examples.mdx",
         "fullpath": "/Users/zhengyima/Desktop/rm-calendar/docs/examples.mdx",
         "link": "https://github.com/mzyyangyang1/rm-calendar/edit/master/docs/examples.mdx",
         "hidden": false,
         "slug": "docs-examples",
-        "route": "/docs-examples",
         "menu": "",
         "headings": [
           {
