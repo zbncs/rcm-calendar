@@ -9,7 +9,7 @@ import './index.scss';
 
 export default function SchedulesData(props: ISchedulesDataProps) {
     const {
-        schedules,
+        schedules = [],
         date,
         clickSchedule,
         rightMouseClick,

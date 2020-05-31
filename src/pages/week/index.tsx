@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { IWeekProps, IDay, ISedules } from '../types';
+import { IWeekProps, IDay, ISedules, IDayCN} from '../types';
 import {getWeekDate} from '../utils/weekDate';
 import Common from '../common/index';
 import dayjs from 'dayjs';
@@ -10,7 +10,8 @@ import './index.scss';
 
 Week.defaultProps = {
     name: 'week',
-    alldayName: '全天'
+    alldayName: '全天',
+    schedules: []
 }
 let moreTop: number = 0;
 export default function Week(props: IWeekProps) {
@@ -20,9 +21,10 @@ export default function Week(props: IWeekProps) {
     const {
         name,
         date,
-        schedules,
+        schedules = [],
         isWhichHour,
         alldayName,
+        isEnglish,
         clickBlank,
         clickSchedule,
         dbclickBlank,
@@ -116,7 +118,7 @@ export default function Week(props: IWeekProps) {
                                         {item.date()}
                                     </span>
                                     <span className={clsName}>
-                                        {IDay[item.day()]}
+                                        {isEnglish ? IDay[item.day()] : IDayCN[item.day()]}
                                     </span>
                                     {
                                         renderHeaderTemplate && renderHeaderTemplate(item)

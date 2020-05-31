@@ -68,7 +68,7 @@ const config = {
         title: 'Rcm Calendar',
         description: 'react calendar',
         host: 'localhost',
-        port: 3000,
+        port: 3001,
         p: 3000,
         separator: '-',
         paths: {

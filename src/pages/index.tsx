@@ -7,14 +7,16 @@ import Month from './month/index';
 // scss
 import './style/base.scss';
 import './index.scss';
+import dayjs from 'dayjs';
 
 export default function Calendar(props: ICalendarProps) {
     const {
-        date,
+        date = dayjs(),
         viewType,
         isWhichHour,
         schedules,
         alldayName,
+        isEnglish = false,
         monthVisibleWeeksCount,
         isVisibleSolar2lunar,
         clickSchedule,
@@ -24,7 +26,7 @@ export default function Calendar(props: ICalendarProps) {
         monthClickMore,
         renderHeaderTemplate,
     } = props;
-    
+    console.log(123, schedules)
     const getViewType = (type: string) => {
         switch(type) {
             case 'day':
@@ -32,6 +34,8 @@ export default function Calendar(props: ICalendarProps) {
                             date={date}
                             isWhichHour={isWhichHour}
                             schedules={schedules}
+                            alldayName={alldayName}
+                            isEnglish={isEnglish}
                             clickSchedule={clickSchedule}
                             clickBlank={clickBlank}
                             dbclickBlank={dbclickBlank}
@@ -44,6 +48,8 @@ export default function Calendar(props: ICalendarProps) {
                             date={date}
                             isWhichHour={isWhichHour}
                             schedules={schedules}
+                            alldayName={alldayName}
+                            isEnglish={isEnglish}
                             clickSchedule={clickSchedule}
                             clickBlank={clickBlank}
                             dbclickBlank={dbclickBlank}
@@ -55,6 +61,7 @@ export default function Calendar(props: ICalendarProps) {
                             name={'month'}
                             date={date}
                             schedules={schedules}
+                            isEnglish={isEnglish}
                             monthVisibleWeeksCount={monthVisibleWeeksCount}
                             isVisibleSolar2lunar={isVisibleSolar2lunar}
                             renderHeaderTemplate={renderHeaderTemplate}

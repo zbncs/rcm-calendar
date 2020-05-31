@@ -53,16 +53,19 @@ const App = () => (
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | view | 视图类型,有day/week/month | string | - |
+| date | 视图的显示日期 | Dayjs | dayjs() |
+| isEnglish | 是否是英语状态 | boolean | false|
 | isWhichHour | 时间 日视图或周视图的时刻轴的时间类型：24/12 | string | '24' |
 | schedules | 日程的数据 | ISchedules[] | - |
-| clickSchedule | 单个日程的点击事件 | (e, schedule) => void | - |
-| rightMouseClick | 右键日程 | (e, schedule) => void | - |
-| clickBlank | 点击空白处 | (e, time) => void | - |
-| dbclickBlank | 双击空白处 (单双击只能有一个) | (e, time) => void | - |
 | monthVisibleWeeksCount | 月视图每天显示的日程数 | number | 2 |
 | isVisibleSolar2lunar | 是否显示农历 | boolean | false |
 | renderHeaderTemplate | 视图头部的自定义 | ReactNode | - |
 | alldayName | 全天的名称 | string | 全天 |
+| clickSchedule | 单个日程的点击事件 | (e, schedule) => void | - |
+| rightMouseClick | 右键日程 | (e, schedule) => void | - |
+| clickBlank | 点击空白处 | (e, time) => void | - |
+| dbclickBlank | 双击空白处 (单双击只能有一个) | (e, time) => void | - |
+| monthClickMore | 月视图点击还有几项按钮事件 | (e, schedules) => void | - |
 
 ISchedules：日程字段说明
 

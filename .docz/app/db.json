@@ -3,7 +3,7 @@
     "title": "Rcm Calendar",
     "description": "react calendar",
     "menu": [],
-    "version": "0.3.0",
+    "version": "0.4.0",
     "repository": "https://github.com/mzyyangyang1/rm-calendar",
     "native": false,
     "themeConfig": {},
@@ -48,37 +48,6 @@
           }
         ]
       }
-    },
-    {
-      "key": "docs/examples.mdx",
-      "value": {
-        "name": "examples",
-        "id": "a0261923c9f3e006856d399286472d9c",
-        "filepath": "docs/examples.mdx",
-        "fullpath": "/Users/zhengyima/Desktop/rm-calendar/docs/examples.mdx",
-        "link": "https://github.com/mzyyangyang1/rm-calendar/edit/master/docs/examples.mdx",
-        "hidden": false,
-        "slug": "docs-examples",
-        "route": "/docs-examples",
-        "menu": "",
-        "headings": [
-          {
-            "slug": "-day",
-            "depth": 2,
-            "value": "📦 day"
-          },
-          {
-            "slug": "-week",
-            "depth": 2,
-            "value": "📦 Week"
-          },
-          {
-            "slug": "-month",
-            "depth": 2,
-            "value": "📦 Month"
-          }
-        ]
-      }
     }
   ],
   "props": [
@@ -103,7 +72,7 @@
               "defaultValue": null,
               "description": "日程数据",
               "name": "schedules",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "ISedules[]"
               }
@@ -112,18 +81,27 @@
               "defaultValue": null,
               "description": "日视图和周视图的时间小时制",
               "name": "isWhichHour",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "\"12\" | \"24\""
               }
             },
             "date": {
               "defaultValue": null,
-              "description": "",
+              "description": "视图的显示日期，dayjs类型，",
               "name": "date",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "Dayjs"
+              }
+            },
+            "isEnglish": {
+              "defaultValue": null,
+              "description": "是否是英语状态",
+              "name": "isEnglish",
+              "required": false,
+              "type": {
+                "name": "boolean"
               }
             },
             "monthVisibleWeeksCount": {
@@ -232,7 +210,7 @@
               "defaultValue": null,
               "description": "",
               "name": "isWhichHour",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "\"12\" | \"24\""
               }
@@ -241,7 +219,7 @@
               "defaultValue": null,
               "description": "",
               "name": "schedules",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "ISedules[]"
               }
@@ -253,6 +231,15 @@
               "required": true,
               "type": {
                 "name": "Dayjs"
+              }
+            },
+            "isEnglish": {
+              "defaultValue": null,
+              "description": "",
+              "name": "isEnglish",
+              "required": false,
+              "type": {
+                "name": "boolean"
               }
             },
             "clickSchedule": {
@@ -307,7 +294,7 @@
               "defaultValue": null,
               "description": "",
               "name": "alldayName",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "string"
               }
@@ -334,7 +321,7 @@
               "defaultValue": null,
               "description": "",
               "name": "isWhichHour",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "\"12\" | \"24\""
               }
@@ -343,7 +330,7 @@
               "defaultValue": null,
               "description": "",
               "name": "schedules",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "ISedules[]"
               }
@@ -355,6 +342,15 @@
               "required": true,
               "type": {
                 "name": "Dayjs"
+              }
+            },
+            "isEnglish": {
+              "defaultValue": null,
+              "description": "",
+              "name": "isEnglish",
+              "required": false,
+              "type": {
+                "name": "boolean"
               }
             },
             "clickSchedule": {
@@ -405,33 +401,6 @@
           "displayName": "month",
           "methods": [],
           "props": {
-            "name": {
-              "defaultValue": null,
-              "description": "",
-              "name": "name",
-              "required": true,
-              "type": {
-                "name": "string"
-              }
-            },
-            "date": {
-              "defaultValue": null,
-              "description": "",
-              "name": "date",
-              "required": true,
-              "type": {
-                "name": "Dayjs"
-              }
-            },
-            "schedules": {
-              "defaultValue": null,
-              "description": "",
-              "name": "schedules",
-              "required": false,
-              "type": {
-                "name": "ISedules[]"
-              }
-            },
             "monthVisibleWeeksCount": {
               "defaultValue": null,
               "description": "",
@@ -459,19 +428,64 @@
                 "name": "(time: Dayjs) => ReactNode"
               }
             },
+            "monthClickMore": {
+              "defaultValue": null,
+              "description": "",
+              "name": "monthClickMore",
+              "required": false,
+              "type": {
+                "name": "(event: MouseEvent<Element, MouseEvent>, schedule: ISedules[]) => void"
+              }
+            },
+            "name": {
+              "defaultValue": null,
+              "description": "",
+              "name": "name",
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "isWhichHour": {
+              "defaultValue": null,
+              "description": "",
+              "name": "isWhichHour",
+              "required": false,
+              "type": {
+                "name": "\"12\" | \"24\""
+              }
+            },
+            "schedules": {
+              "defaultValue": null,
+              "description": "",
+              "name": "schedules",
+              "required": false,
+              "type": {
+                "name": "ISedules[]"
+              }
+            },
+            "date": {
+              "defaultValue": null,
+              "description": "",
+              "name": "date",
+              "required": true,
+              "type": {
+                "name": "Dayjs"
+              }
+            },
+            "isEnglish": {
+              "defaultValue": null,
+              "description": "",
+              "name": "isEnglish",
+              "required": false,
+              "type": {
+                "name": "boolean"
+              }
+            },
             "clickSchedule": {
               "defaultValue": null,
               "description": "",
               "name": "clickSchedule",
-              "required": false,
-              "type": {
-                "name": "(event: MouseEvent<Element, MouseEvent>, schedule: ISedules) => void"
-              }
-            },
-            "rightMouseClick": {
-              "defaultValue": null,
-              "description": "",
-              "name": "rightMouseClick",
               "required": false,
               "type": {
                 "name": "(event: MouseEvent<Element, MouseEvent>, schedule: ISedules) => void"
@@ -495,13 +509,13 @@
                 "name": "(event: MouseEvent<Element, MouseEvent>, timeStart: number) => void"
               }
             },
-            "monthClickMore": {
+            "rightMouseClick": {
               "defaultValue": null,
               "description": "",
-              "name": "monthClickMore",
+              "name": "rightMouseClick",
               "required": false,
               "type": {
-                "name": "(event: MouseEvent<Element, MouseEvent>, schedule: ISedules[]) => void"
+                "name": "(event: MouseEvent<Element, MouseEvent>, schedule: ISedules) => void"
               }
             }
           }
@@ -520,7 +534,7 @@
               "defaultValue": null,
               "description": "",
               "name": "alldayName",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "string"
               }
@@ -547,7 +561,7 @@
               "defaultValue": null,
               "description": "",
               "name": "isWhichHour",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "\"12\" | \"24\""
               }
@@ -556,7 +570,7 @@
               "defaultValue": null,
               "description": "",
               "name": "schedules",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "ISedules[]"
               }
@@ -568,6 +582,15 @@
               "required": true,
               "type": {
                 "name": "Dayjs"
+              }
+            },
+            "isEnglish": {
+              "defaultValue": null,
+              "description": "",
+              "name": "isEnglish",
+              "required": false,
+              "type": {
+                "name": "boolean"
               }
             },
             "clickSchedule": {
@@ -640,7 +663,7 @@
               "defaultValue": null,
               "description": "",
               "name": "schedules",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "ISedules[]"
               }
@@ -688,7 +711,7 @@
               "defaultValue": null,
               "description": "",
               "name": "schedules",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "ISedules[]"
               }
@@ -766,7 +789,7 @@
               "defaultValue": null,
               "description": "",
               "name": "isWhichHour",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "\"12\" | \"24\""
               }
@@ -775,7 +798,7 @@
               "defaultValue": null,
               "description": "",
               "name": "schedules",
-              "required": true,
+              "required": false,
               "type": {
                 "name": "ISedules[]"
               }
@@ -787,6 +810,15 @@
               "required": true,
               "type": {
                 "name": "Dayjs"
+              }
+            },
+            "isEnglish": {
+              "defaultValue": null,
+              "description": "",
+              "name": "isEnglish",
+              "required": false,
+              "type": {
+                "name": "boolean"
               }
             },
             "clickSchedule": {
