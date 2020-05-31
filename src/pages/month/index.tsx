@@ -1,5 +1,5 @@
 import React from 'react';
-import {IMonthProps, IDay, ISedules} from '../types';
+import {IMonthProps, IDay, ISedules, IDayCN} from '../types';
 import {getMonthDate} from '../utils/weekDate';
 import dayjs, { Dayjs } from 'dayjs';
 import c from 'classnames';
@@ -19,6 +19,7 @@ export default function Month(props: IMonthProps) {
         schedules,
         monthVisibleWeeksCount,
         isVisibleSolar2lunar,
+        isEnglish,
         renderHeaderTemplate,
         clickSchedule,
         rightMouseClick,
@@ -127,7 +128,7 @@ export default function Month(props: IMonthProps) {
                     monthDate[0].map((item: Dayjs, index: number) => {
                         return (
                             <div className="rm-calendar-month-dayname-item" key={index}>
-                                {IDay[item.day()]}
+                                {isEnglish ? IDay[item.day()] : IDayCN[item.day()]}
                             </div>
                         )
                     })
@@ -151,7 +152,7 @@ export default function Month(props: IMonthProps) {
                                             <div className="rm-calendar-month-week-item-header">
                                                 <span className={cls}>{dayItem.date()}</span>
                                                 {/* 农历 */}
-                                                { isVisibleSolar2lunar &&
+                                                { isVisibleSolar2lunar && !isEnglish &&
                                                     <span className="rm-calendar-month-week-item-header-dayCn">
                                                         {solar2lunarData.term ? solar2lunarData.term : solar2lunarData.dayCn}
                                                     </span>

@@ -28,20 +28,22 @@
             position: absolute;
             left: 0;
             height: 100%;
-            width: 64px;
-            text-align: center;
+            width: 74px;
             border-right: 1px solid rgb(229, 229, 229);
             .rm-calendar-allday-text {
+                display: inline-block;
                 position: absolute;
                 top: 50%;
                 margin-top: -6px;
+                width: 100%;
+                text-align: center;
             }
         }
         .rm-calendar-allday-schedules {
             display: inline-block;
-            width: calc(100% - 65px);
+            width: calc(100% - 75px);
             position: absolute;
-            left: 65px;
+            left: 75px;
             top: 0;
             height: 100%;
             .rm-calendar-schedule-item {

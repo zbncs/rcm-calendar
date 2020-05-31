@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Common from '../common/index';
-import {IDayProps, IDay, ISedules} from '../types';
+import {IDayProps, IDay, ISedules, IDayCN} from '../types';
 import dayjs from 'dayjs';
 
 // scss
@@ -10,7 +10,8 @@ Day.defaultProps = {
     isWhichHour: "24",
     date: dayjs(),
     name: 'day',
-    alldayName: '全天'
+    alldayName: '全天',
+    schedules: []
 }
 
 let moreTop: number = 0;
@@ -20,9 +21,10 @@ export default function Day(props: IDayProps) {
     const {
         name,
         isWhichHour,
-        schedules,
+        schedules = [],
         date,
         alldayName,
+        isEnglish,
         clickSchedule,
         clickBlank,
         dbclickBlank,
@@ -79,7 +81,7 @@ export default function Day(props: IDayProps) {
                         {date.date()}
                     </span>
                     <span className="rm-calendar-day-date-name">
-                        {IDay[date.day()]}
+                        {isEnglish ? IDay[date.day()] : IDayCN[date.day()]}
                     </span>
                     {
                         renderHeaderTemplate && renderHeaderTemplate(dayjs())

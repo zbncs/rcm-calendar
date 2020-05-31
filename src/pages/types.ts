@@ -13,9 +13,9 @@ export interface ISedules {
     color: string;
     bgColor: string;
     borderColor: string;
-    customStyle: any;
-    state: string;
-    raw: any;
+    customStyle?: any;
+    state?: string;
+    raw?: any;
     sort?: number;
 
 }
@@ -30,15 +30,19 @@ export interface ICalendarProps {
     /**
      * 日程数据
      */
-    schedules: Array<ISedules>;
+    schedules?: Array<ISedules>;
     /**
      * 日视图和周视图的时间小时制
      */
-    isWhichHour: '12' | '24';
+    isWhichHour?: '12' | '24';
     /**
-     * 
+     * 视图的显示日期，dayjs类型，
      */
-    date: Dayjs;
+    date?: Dayjs;
+    /**
+     * 是否是英语状态
+     */
+    isEnglish?: boolean;
     /**
      * 月视图每天显示的日程数
      */
@@ -79,9 +83,10 @@ export interface ICalendarProps {
 
 interface ISameProps {
     readonly name: string;
-    isWhichHour: '12' | '24';
-    schedules: Array<ISedules>;
+    isWhichHour?: '12' | '24';
+    schedules?: Array<ISedules>;
     date: Dayjs;
+    isEnglish?: boolean;
     clickSchedule?: (event: React.MouseEvent, schedule: ISedules) => void;
     clickBlank?: (event: React.MouseEvent, timeStart: number) => void;
     dbclickBlank?: (event: React.MouseEvent, timeStart: number) => void;
@@ -89,23 +94,23 @@ interface ISameProps {
 }
 
 export interface IDayProps extends ISameProps {
-    alldayName: string;
+    alldayName?: string;
     renderHeaderTemplate?: (time: Dayjs) => React.ReactNode;
 }
 
 export interface IWeekProps extends IDayProps {}
 
-export interface IMonthProps {
-    name: string;
-    date: Dayjs;
-    schedules?: Array<ISedules>;
+export interface IMonthProps extends ISameProps {
+    // name: string;
+    // date: Dayjs;
+    // schedules?: Array<ISedules>;
     monthVisibleWeeksCount: number;
     isVisibleSolar2lunar?: boolean;
     renderHeaderTemplate?: (time: Dayjs) => React.ReactNode;
-    clickSchedule?: (event: React.MouseEvent, schedule: ISedules) => void;
-    rightMouseClick?: (event: React.MouseEvent, schedule: ISedules) => void;
-    clickBlank?: (event: React.MouseEvent, timeStart: number) => void;
-    dbclickBlank?: (event: React.MouseEvent, timeStart: number) => void;
+    // clickSchedule?: (event: React.MouseEvent, schedule: ISedules) => void;
+    // rightMouseClick?: (event: React.MouseEvent, schedule: ISedules) => void;
+    // clickBlank?: (event: React.MouseEvent, timeStart: number) => void;
+    // dbclickBlank?: (event: React.MouseEvent, timeStart: number) => void;
     monthClickMore?: (event: React.MouseEvent, schedule: ISedules[]) => void;
 }
 
@@ -134,7 +139,7 @@ export interface ICommonProps extends ISameProps {
 }
 
 export interface ISchedulesDataProps {
-    schedules: Array<ISedules>;
+    schedules?: Array<ISedules>;
     date: Dayjs;
     clickSchedule?: (event: React.MouseEvent, schedule: ISedules) => void;
     rightMouseClick?: (event: React.MouseEvent, schedule: ISedules) => void;
@@ -148,6 +153,16 @@ export enum IDay {
     Thur,
     Fri,
     Sat,
+}
+
+export enum IDayCN {
+    '周日' = 0,
+    '周一',
+    '周二',
+    '周三',
+    '周四',
+    '周五',
+    '周六',
 }
 
 //

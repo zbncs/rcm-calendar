@@ -11,7 +11,7 @@ export default function Common(props: ICommonProps) {
     const {
         name,
         date,
-        isWhichHour,
+        isWhichHour = "24",
         schedules,
         clickSchedule,
         clickBlank,

@@ -11,7 +11,7 @@ import './index.scss';
 export default function TimeGridLine(props: ITimeGridLineProps) {
     const {
         name,
-        isWhichHour,
+        isWhichHour = "24",
         schedules,
         date,
         clickSchedule,
