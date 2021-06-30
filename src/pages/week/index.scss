@@ -57,33 +57,32 @@ $border-color: #e5e5e5;
     }
     .rm-calendar-allday-right {
         width: calc(100% - 74px);
+        height: 100%;
         display: flex;
         overflow-y: scroll;
-        span.rm-calendar-week-allday-schedules:first-child {
-            display: inline-block;
-            // width: 74px;
+        position: relative;
+        .rm-calendar-week-allday-schedules-grid {
+            width: 100%;
+            height: 100%;
+            &-item {
+                display: inline-block;
+                width: calc(100% / 7);
+                border-left: 1px solid $border-color;
+                height: 100%;
+            }
         }
-        span.rm-calendar-week-allday-schedules {
-            display: inline-block;
-            width: calc(100% / 7);
-            border-left: 1px solid $border-color;
-            position: relative;
+
+        .rm-calendar-allday-schedules-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             .rm-calendar-week-allday-schedule {
                 position: absolute;
                 width: 100%;
                 .rm-calendar-week-allday-schedule-title {
                     margin-left: 4px;
-                }
-            }
-            .rm-calendar-week-allday-schedules-num {
-                position: absolute;
-                width: 100%;
-                height: 26px;
-                text-align: center;
-                line-height: 26px;
-                cursor: pointer;
-                .rm-calendar-allday-week-schedules-num-text {
-                    color: skyblue;
                 }
             }
         }

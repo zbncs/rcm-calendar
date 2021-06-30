@@ -53,7 +53,7 @@ const config = {
         o: null,
         open: null,
         'open-browser': null,
-        root: '/Users/zhengyima/Desktop/rm-calendar/.docz',
+        root: '/Users/zhengyima/Desktop/dev/rcm-calendar/.docz',
         base: '/',
         source: './',
         'gatsby-root': null,
@@ -68,30 +68,36 @@ const config = {
         title: 'Rcm Calendar',
         description: 'react calendar',
         host: 'localhost',
-        port: 3001,
+        port: 3000,
         p: 3000,
         separator: '-',
         paths: {
-          root: '/Users/zhengyima/Desktop/rm-calendar',
+          root: '/Users/zhengyima/Desktop/dev/rcm-calendar',
           templates:
-            '/Users/zhengyima/Desktop/rm-calendar/node_modules/docz-core/dist/templates',
-          docz: '/Users/zhengyima/Desktop/rm-calendar/.docz',
-          cache: '/Users/zhengyima/Desktop/rm-calendar/.docz/.cache',
-          app: '/Users/zhengyima/Desktop/rm-calendar/.docz/app',
-          appPackageJson: '/Users/zhengyima/Desktop/rm-calendar/package.json',
-          appTsConfig: '/Users/zhengyima/Desktop/rm-calendar/tsconfig.json',
-          gatsbyConfig: '/Users/zhengyima/Desktop/rm-calendar/gatsby-config.js',
+            '/Users/zhengyima/Desktop/dev/rcm-calendar/node_modules/docz-core/dist/templates',
+          docz: '/Users/zhengyima/Desktop/dev/rcm-calendar/.docz',
+          cache: '/Users/zhengyima/Desktop/dev/rcm-calendar/.docz/.cache',
+          app: '/Users/zhengyima/Desktop/dev/rcm-calendar/.docz/app',
+          appPackageJson:
+            '/Users/zhengyima/Desktop/dev/rcm-calendar/package.json',
+          appTsConfig:
+            '/Users/zhengyima/Desktop/dev/rcm-calendar/tsconfig.json',
+          gatsbyConfig:
+            '/Users/zhengyima/Desktop/dev/rcm-calendar/gatsby-config.js',
           gatsbyBrowser:
-            '/Users/zhengyima/Desktop/rm-calendar/gatsby-browser.js',
-          gatsbyNode: '/Users/zhengyima/Desktop/rm-calendar/gatsby-node.js',
-          gatsbySSR: '/Users/zhengyima/Desktop/rm-calendar/gatsby-ssr.js',
+            '/Users/zhengyima/Desktop/dev/rcm-calendar/gatsby-browser.js',
+          gatsbyNode:
+            '/Users/zhengyima/Desktop/dev/rcm-calendar/gatsby-node.js',
+          gatsbySSR: '/Users/zhengyima/Desktop/dev/rcm-calendar/gatsby-ssr.js',
           importsJs:
-            '/Users/zhengyima/Desktop/rm-calendar/.docz/app/imports.js',
-          rootJs: '/Users/zhengyima/Desktop/rm-calendar/.docz/app/root.jsx',
-          indexJs: '/Users/zhengyima/Desktop/rm-calendar/.docz/app/index.jsx',
+            '/Users/zhengyima/Desktop/dev/rcm-calendar/.docz/app/imports.js',
+          rootJs:
+            '/Users/zhengyima/Desktop/dev/rcm-calendar/.docz/app/root.jsx',
+          indexJs:
+            '/Users/zhengyima/Desktop/dev/rcm-calendar/.docz/app/index.jsx',
           indexHtml:
-            '/Users/zhengyima/Desktop/rm-calendar/.docz/app/index.html',
-          db: '/Users/zhengyima/Desktop/rm-calendar/.docz/app/db.json',
+            '/Users/zhengyima/Desktop/dev/rcm-calendar/.docz/app/index.html',
+          db: '/Users/zhengyima/Desktop/dev/rcm-calendar/.docz/app/db.json',
         },
       },
     },

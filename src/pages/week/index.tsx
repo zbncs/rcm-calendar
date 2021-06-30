@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { IWeekProps, IDay, ISedules } from '../types';
+import { IWeekProps, IDay, ISedules, IDayCN} from '../types';
 import {getWeekDate} from '../utils/weekDate';
 import Common from '../common/index';
 import dayjs from 'dayjs';
@@ -10,9 +10,11 @@ import './index.scss';
 
 Week.defaultProps = {
     name: 'week',
-    alldayName: '全天'
+    alldayName: '全天',
+    schedules: []
 }
 let moreTop: number = 0;
+const totalCopies = 7 * 24;
 export default function Week(props: IWeekProps) {
     let alldaySchedulesArr: ISedules[] = [];
     let notAlldaySchedulesArr: ISedules[] = [];
@@ -20,9 +22,10 @@ export default function Week(props: IWeekProps) {
     const {
         name,
         date,
-        schedules,
+        schedules = [],
         isWhichHour,
         alldayName,
+        isEnglish,
         clickBlank,
         clickSchedule,
         dbclickBlank,
@@ -39,11 +42,16 @@ export default function Week(props: IWeekProps) {
     // 利用useRef储存值
     const sameNumRef = useRef<number[]>([]);
     let maxNUm: number[]  = [];
+    // 
+    const dayNumMp = new Map();
+    // 
+    const alldayRef = useRef(null);
+    const [alldayWidth, setAlldayWidth] = useState(0);
 
     useEffect(() => {
         schedules.forEach((item, index) => {
             const crossDay = dayjs.unix(item.end).diff(dayjs.unix(item.start), "day", true);
-            if (item.isAllDay || crossDay >= 1) {
+            if (item.isAllDay) {
                 alldaySchedulesArr.push(item);
             }
             else {
@@ -56,11 +64,22 @@ export default function Week(props: IWeekProps) {
         setWeekAlldaySchedules(weekAlldaySchedulesArr)
         setAlldaySchedules(alldaySchedulesArr);
         setNotAlldaySchedules(notAlldaySchedulesArr);
+        return () => {
+            sameNumRef.current = null;
+            maxNUm = null;
+        }
     }, [schedules])
+
+    useEffect(() => {
+        // 
+        if (alldayRef && alldayRef.current) {
+            setAlldayWidth(alldayRef.current.clientWidth);
+        }
+    })
 
     const getWeekAlldayHeight = () => {
         const max = Math.max.apply(null, sameNumRef.current);
-        if (max >= 3 && !isShowMoreSchedules) { // 全天日程大于3,没展示全部日程时
+        if (max > 3 && !isShowMoreSchedules) { // 全天日程大于3,没展示全部日程时
             return `${4 * 26}px`;
         }
         else if (max >= 3 && isShowMoreSchedules) { // 全天日程大于3,展示全部日程时
@@ -116,7 +135,7 @@ export default function Week(props: IWeekProps) {
                                         {item.date()}
                                     </span>
                                     <span className={clsName}>
-                                        {IDay[item.day()]}
+                                        {isEnglish ? IDay[item.day()] : IDayCN[item.day()]}
                                     </span>
                                     {
                                         renderHeaderTemplate && renderHeaderTemplate(item)
@@ -132,77 +151,104 @@ export default function Week(props: IWeekProps) {
                     <span className="rm-calendar-allday-left-text">{alldayName}</span>
                 </div>
                 <div className="rm-calendar-allday-right">
-                    {
-                        weeDateArr.map((itemDate, index) => {
-                            const dayStart = itemDate.startOf('day').unix();
-                            const dayEnd = itemDate.endOf('day').add(1, 'second').unix();
-                            let sameTimeNum = 0;
-                            const cls = c('rm-calendar-week-allday-schedules', {
-                                'is-today': itemDate.startOf('day').unix() === dayjs().startOf('day').unix()
+                    {/* 全天日程的grid */}
+                    <div className="rm-calendar-week-allday-schedules-grid">
+                        {
+                            weeDateArr.map((itemDate, index) => {
+                                const cls = c('rm-calendar-week-allday-schedules-grid-item', {
+                                    'is-today': itemDate.startOf('day').unix() === dayjs().startOf('day').unix()
+                                })
+                                return (
+                                    <span 
+                                        key={index}
+                                        onClick={(e) => handleBlank(e, itemDate.unix(), 'click')}
+                                        onDoubleClick={(e) => handleBlank(e, itemDate.unix(), 'dbclick')}
+                                        className={cls}
+                                    >
+                                    </span>
+                                )
                             })
-                            return (
-                                <span 
-                                    key={index}
-                                    onClick={(e) => handleBlank(e, itemDate.unix(), 'click')}
-                                    onDoubleClick={(e) => handleBlank(e, itemDate.unix(), 'dbclick')}
-                                    className={cls}
-                                >
-                                    {
-                                        alldaySchedules.map((item, index) => {
-                                            if (item.end <= dayStart || item.start >= dayEnd) {
-                                                return;
-                                            }
-                                            if (
-                                                (item.start >= dayStart && item.start <= dayEnd) ||
-                                                (item.end >= dayStart && item.end <= dayEnd) ||
-                                                (item.start <= dayStart && item.end >= dayEnd)
-                                                ) {
-                                                sameTimeNum++;
-                                                // 用于储存本周每天的全天日程的数量
-                                                maxNUm.push(sameTimeNum);
-                                            }
-                                            if (sameTimeNum > 3 && !isShowMoreSchedules) return;
-                                            const top = !isShowMoreSchedules ? 3 * 26 : sameTimeNum * 26;
-                                            moreTop = top;
-                                            const scheduleStyle = {
-                                                borderLeft: `2px solid ${item.borderColor}`,
-                                                color: item.color,
-                                                height: '26px',
-                                                lineHeight: '26px',
-                                                top: `${(sameTimeNum- 1) * 26 + (sameTimeNum- 1)}px`,
-                                                backgroundColor: item.bgColor,
-                                                ...item.customStyle,
-                                            }
-                                            sameNumRef.current = maxNUm;
-                                            return (
-                                                <div 
-                                                    key={index}
-                                                    date-type="schedule"
-                                                    className="rm-calendar-week-allday-schedule"
-                                                    style={scheduleStyle}
-                                                    onClick={(e) => handleClickSchedule(e, item)}
-                                                    onContextMenu={(e) => handleContextMenu(e, item)}
-                                                >
-                                                    <span date-type="schedule" className="rm-calendar-week-allday-schedule-title">
-                                                        {item.title}
-                                                    </span>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                    {
-                                        weekAlldaySchedules.map((item, index) => {
-                                            return (
-                                                sameTimeNum > 3 && item.start === dayStart && <div date-type="more" key={index} style={{top: `${moreTop + 2}px`}} className="rm-calendar-week-allday-schedules-num">
-                                                <span date-type="more" onClick={handleClickMore} className="rm-calendar-allday-week-schedules-num-text">{isShowMoreSchedules ? '收起' : `还有${sameTimeNum - 3}项`}</span>
-                                            </div>
-                                            )
-                                        })
-                                    }
-                                </span>
-                            )
-                        })
-                    }
+                        }
+                    </div>
+                    {/* 全天的日程 */}
+                    <div className="rm-calendar-allday-schedules-container" ref={alldayRef}>
+                        {
+                            alldaySchedules.map((item, index) => {
+                                // 不在本周范围内
+                                if (item.end <= weekdayStart || item.start >= weekdayEnd) {
+                                    return;
+                                }
+                                // 按照小时把七天分成 7 * 24 份
+                                // 开始时间的占的份数
+                                const startNumCopies = dayjs.unix(item.start).diff(dayjs.unix(weekdayStart), 'hour');
+                                // 结束时间的占的份数
+                                const endNumCopies = dayjs.unix(item.end).diff(dayjs.unix(weekdayStart), 'hour');
+
+                                // 待优化=====
+                                weeDateArr.forEach(itemDate => {
+                                    const dayStart = itemDate.startOf('day').unix();
+                                    const dayEnd = itemDate.endOf('day').unix();
+                                    let i = 0;
+                                    alldaySchedules.forEach(item => {
+                                        if (
+                                            (item.start >= dayStart && item.start <= dayEnd) ||
+                                            (item.end >= dayStart && item.end <= dayEnd) ||
+                                            (item.start <= dayStart && item.end >= dayEnd)
+                                        ) {
+                                                // 用id记录是第几个 todo：位置还有问题
+                                                i++;
+                                                if (!dayNumMp.get(item.id) || dayNumMp.get(item.id) < i) {
+                                                    dayNumMp.set(item.id, i);
+                                                }
+                                            // 用于储存本周每天的全天日程的数量
+                                            maxNUm.push(i);
+                                        }
+                                    })
+                                });
+                                let scheduleStyle = {
+                                    borderLeft: `2px solid ${item.borderColor}`,
+                                    color: item.color,
+                                    height: '26px',
+                                    lineHeight: '26px',
+                                    width: `calc(${(endNumCopies - startNumCopies) / totalCopies} * 100%)`,
+                                    left: `${(startNumCopies / totalCopies) * alldayWidth}px`,
+                                    top: `${(dayNumMp.get(item.id) - 1) * 26 + (dayNumMp.get(item.id) - 1)}px`,
+                                    backgroundColor: item.bgColor,
+                                    ...item.customStyle,
+                                }
+                                
+                                // if (sameTimeNum > 3 && !isShowMoreSchedules) return;
+                                // const top = !isShowMoreSchedules ? 3 * 26 : sameTimeNum * 26;
+                                // moreTop = top;
+                                
+                                sameNumRef.current = maxNUm;
+                                return (
+                                    <div 
+                                        key={index}
+                                        date-type="schedule"
+                                        className="rm-calendar-week-allday-schedule"
+                                        style={scheduleStyle}
+                                        onClick={(e) => handleClickSchedule(e, item)}
+                                        onContextMenu={(e) => handleContextMenu(e, item)}
+                                    >
+                                        <span date-type="schedule" className="rm-calendar-week-allday-schedule-title">
+                                            {item.title}
+                                        </span>
+                                    </div>
+                                )
+                            })
+                        }
+                        {/* {
+                            weekAlldaySchedules.map((item, index) => {
+                                return (
+                                    sameTimeNum > 3 && item.start === dayStart && <div date-type="more" key={index} style={{top: `${moreTop + 2}px`}} className="rm-calendar-week-allday-schedules-num">
+                                    <span date-type="more" onClick={handleClickMore} className="rm-calendar-allday-week-schedules-num-text">{isShowMoreSchedules ? '收起' : `还有${sameTimeNum - 3}项`}</span>
+                                </div>
+                                )
+                            })
+                        } */}
+                    </div>
+                    
                 </div>
             </div>}
             <Common 
