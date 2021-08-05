@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 
 export interface ISedules {
-    id?: string;
+    id?: string | number;
     calendarId?: string;
     recurrenceId?: string;
     title: string;

@@ -8,7 +8,7 @@ import './index.scss';
 
 Day.defaultProps = {
     isWhichHour: "24",
-    date: dayjs(),
+    date: dayjs().startOf('day'),
     name: 'day',
     alldayName: '全天',
     schedules: []
@@ -38,11 +38,11 @@ export default function Day(props: IDayProps) {
 
     useEffect(() => {
         schedules.forEach((item) => {
-            const crossDay = dayjs.unix(item.end).diff(dayjs.unix(item.start), "day", true);
+            // const crossDay = dayjs.unix(item.end).diff(dayjs.unix(item.start), "day", true);
             if (item.end <= date.startOf("day").unix() || item.start > date.endOf("day").unix()) {
                 return;
             }
-            if (item.isAllDay || crossDay >= 1) {
+            if (item.isAllDay) {
                 alldaySchedulesArr.push(item);
             }
             else {
@@ -62,10 +62,10 @@ export default function Day(props: IDayProps) {
             return `108px`;
         }
         else if (alldaySchedules.length > 3 && isShowMoreSchedules) { // 全天日程大于3,展示全部日程时
-            return `${26 * alldaySchedules.length + 2 *(alldaySchedules.length - 1) + 26}px`;
+            return `${30 * alldaySchedules.length + 2 *(alldaySchedules.length - 1) + 30}px`;
         }
         else { // 全天日程小于3
-            return `${26 * alldaySchedules.length + 2 *(alldaySchedules.length - 1)}px`;
+            return `${30 * alldaySchedules.length + 2 *(alldaySchedules.length - 1)}px`;
         }
     }
 
@@ -99,13 +99,13 @@ export default function Day(props: IDayProps) {
                         {
                             alldaySchedules.map((item, index) => {
                                 if (index > 2 && !isShowMoreSchedules) return;
-                                const top = index * 26 + 2*(index - 1) < 0 ? 0 : index * 28;
+                                const top = index * 30 + 2*(index - 1) < 0 ? 1 : index * 30;
                                 moreTop = top;
                                 const scheduleItemStyle = {
                                     color: item.color,
                                     borderLeft: `2px solid ${item.borderColor}`,
                                     width: 'calc(100%)',
-                                    height: '26px',
+                                    height: '28px',
                                     top: `${top}px`,
                                     backgroundColor: item.bgColor,
                                     ...item.customStyle,
@@ -131,7 +131,7 @@ export default function Day(props: IDayProps) {
             }
             <Common
                 name={name}
-                date={date} 
+                date={date.startOf('day')} 
                 isWhichHour={isWhichHour}
                 schedules={notAlldaySchedules}
                 clickSchedule={clickSchedule}

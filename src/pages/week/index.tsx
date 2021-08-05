@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, Fragment } from 'react';
 import { IWeekProps, IDay, ISedules, IDayCN} from '../types';
 import {getWeekDate} from '../utils/weekDate';
 import Common from '../common/index';
@@ -40,7 +40,7 @@ export default function Week(props: IWeekProps) {
     const [isShowMoreSchedules, setIsShowMoreSchedules] = useState(false);
     const [weekAlldaySchedules, setWeekAlldaySchedules] = useState<ISedules[]>([]);
     // 利用useRef储存值
-    const sameNumRef = useRef<number[]>([]);
+    const sameNumRef = useRef<number>(0);
     let maxNUm: number[]  = [];
     // 
     const dayNumMp = new Map();
@@ -50,15 +50,22 @@ export default function Week(props: IWeekProps) {
 
     useEffect(() => {
         schedules.forEach((item, index) => {
-            const crossDay = dayjs.unix(item.end).diff(dayjs.unix(item.start), "day", true);
+            // const crossDay = dayjs.unix(item.end).diff(dayjs.unix(item.start), "day", true);
             if (item.isAllDay) {
                 alldaySchedulesArr.push(item);
             }
             else {
                 notAlldaySchedulesArr.push(item);
             }
-            if (item.start >= weekdayStart && item.end <= weekdayEnd && (item.isAllDay || crossDay >= 1)) {
-                weekAlldaySchedulesArr.push(item);
+            // 本周的全天日程
+            if (
+                (item.start >= weekdayStart && item.start < weekdayEnd) ||
+                (item.end >= weekdayStart && item.end < weekdayEnd) ||
+                (item.start <= weekdayStart && item.end >= weekdayEnd)
+            ) {
+                if (item.isAllDay) {
+                    weekAlldaySchedulesArr.push(item);
+                }
             }
         })
         setWeekAlldaySchedules(weekAlldaySchedulesArr)
@@ -78,7 +85,7 @@ export default function Week(props: IWeekProps) {
     })
 
     const getWeekAlldayHeight = () => {
-        const max = Math.max.apply(null, sameNumRef.current);
+        const max = sameNumRef.current;
         if (max > 3 && !isShowMoreSchedules) { // 全天日程大于3,没展示全部日程时
             return `${4 * 26}px`;
         }
@@ -90,7 +97,85 @@ export default function Week(props: IWeekProps) {
         }
     }
 
-    const handleClickMore = () => {
+    // 计算日程的位置
+    const handleSchedulePlace = (scheduleId: number | string) => {
+        // 记录同一时间出现最多的日程数量
+        let maxNUm: number[] = [];
+        // 记录同一时间内这个是第几个日程
+        const dayNumMp = new Map();
+        weeDateArr.forEach(itemDate => {
+            const dayStart = itemDate.startOf('day').unix();
+            const dayEnd = itemDate.endOf('day').unix();
+            let i = 0;
+
+            alldaySchedules.forEach(item => {
+                if (
+                    (item.start >= dayStart && item.start <= dayEnd) ||
+                    (item.end >= dayStart && item.end <= dayEnd) ||
+                    (item.start <= dayStart && item.end >= dayEnd)
+                ) {
+                        // 用id记录是第几个
+                        i++;
+                        // 用于储存本周每天的全天日程的数量
+                        maxNUm.push(i);
+                        if (!dayNumMp.get(item.id) || dayNumMp.get(item.id) <= i) {
+                            dayNumMp.set(item.id, i);
+                        }
+                        else {
+                            i--;
+                        }
+                }
+            })
+        });
+
+        return {
+            sameTimeMaxScheduleNum: Math.max(...maxNUm),
+            sameTimeScheduleIndex: dayNumMp.get(scheduleId)
+        }
+    }
+
+    // 
+    const renderAllSchedule = (sameTimeScheduleIndex: number, scheduleStyle: any, item: any) => {
+        if (isShowMoreSchedules) {
+            return (
+                <div 
+                    date-type="schedule"
+                    className="rm-calendar-week-allday-schedule"
+                    style={scheduleStyle}
+                    onClick={(e) => handleClickSchedule(e, item)}
+                    onContextMenu={(e) => handleContextMenu(e, item)}
+                >
+                    <span date-type="schedule" className="rm-calendar-week-allday-schedule-title">
+                        {item.title}
+                    </span>
+                </div>
+            )
+            
+        }
+        
+        return (<>
+            {
+                (sameTimeScheduleIndex <= 3 && !isShowMoreSchedules)
+                ? (
+                    <div 
+                        date-type="schedule"
+                        className="rm-calendar-week-allday-schedule"
+                        style={scheduleStyle}
+                        onClick={(e) => handleClickSchedule(e, item)}
+                        onContextMenu={(e) => handleContextMenu(e, item)}
+                    >
+                        <span date-type="schedule" className="rm-calendar-week-allday-schedule-title">
+                            {item.title}
+                        </span>
+                    </div>
+                )
+                : null
+            }
+        </>)
+    }
+
+    const handleClickMore = (e: React.MouseEvent) => {
+        e.preventDefault();
         setIsShowMoreSchedules(!isShowMoreSchedules);
     }
 
@@ -150,14 +235,18 @@ export default function Week(props: IWeekProps) {
                 <div className="rm-calendar-allday-left">
                     <span className="rm-calendar-allday-left-text">{alldayName}</span>
                 </div>
-                <div className="rm-calendar-allday-right">
+                <div className="rm-calendar-allday-right" ref={alldayRef}>
                     {/* 全天日程的grid */}
                     <div className="rm-calendar-week-allday-schedules-grid">
                         {
                             weeDateArr.map((itemDate, index) => {
+                                const dayStart = itemDate.startOf('day').unix();
+                                const dayEnd = itemDate.endOf('day').add(1, 'second').unix();
                                 const cls = c('rm-calendar-week-allday-schedules-grid-item', {
                                     'is-today': itemDate.startOf('day').unix() === dayjs().startOf('day').unix()
-                                })
+                                });
+                                let ind = 0;
+                                
                                 return (
                                     <span 
                                         key={index}
@@ -165,90 +254,74 @@ export default function Week(props: IWeekProps) {
                                         onDoubleClick={(e) => handleBlank(e, itemDate.unix(), 'dbclick')}
                                         className={cls}
                                     >
+                                        {
+                                           weekAlldaySchedules.map((item, index) => {
+                                                if (
+                                                    (item.start >= dayStart && item.start < dayEnd) ||
+                                                    (item.end >= dayStart && item.end < dayEnd) ||
+                                                    (item.start <= dayStart && item.end >= dayEnd)
+                                                ) {
+                                                        // 记录是第几个
+                                                        ind++;
+                                                }
+                                                const top = !isShowMoreSchedules ? 3 * 26 : ind * 26;
+
+                                                return (
+                                                    ind > 3 && 
+                                                    <div
+                                                        date-type="more" 
+                                                        key={index} 
+                                                        style={{top: `${top + 2}px`}} 
+                                                        className="rm-calendar-week-allday-schedules-num"
+                                                        onClick={handleClickMore}
+                                                    >
+                                                        <span date-type="more" className="rm-calendar-allday-week-schedules-num-text">{isShowMoreSchedules ? '收起' : `还有${ind - 3}项`}</span>
+                                                    </div>
+                                                )
+                                            })
+                                        }
                                     </span>
                                 )
                             })
                         }
                     </div>
                     {/* 全天的日程 */}
-                    <div className="rm-calendar-allday-schedules-container" ref={alldayRef}>
-                        {
-                            alldaySchedules.map((item, index) => {
-                                // 不在本周范围内
-                                if (item.end <= weekdayStart || item.start >= weekdayEnd) {
-                                    return;
-                                }
-                                // 按照小时把七天分成 7 * 24 份
-                                // 开始时间的占的份数
-                                const startNumCopies = dayjs.unix(item.start).diff(dayjs.unix(weekdayStart), 'hour');
-                                // 结束时间的占的份数
-                                const endNumCopies = dayjs.unix(item.end).diff(dayjs.unix(weekdayStart), 'hour');
-
-                                // 待优化=====
-                                weeDateArr.forEach(itemDate => {
-                                    const dayStart = itemDate.startOf('day').unix();
-                                    const dayEnd = itemDate.endOf('day').unix();
-                                    let i = 0;
-                                    alldaySchedules.forEach(item => {
-                                        if (
-                                            (item.start >= dayStart && item.start <= dayEnd) ||
-                                            (item.end >= dayStart && item.end <= dayEnd) ||
-                                            (item.start <= dayStart && item.end >= dayEnd)
-                                        ) {
-                                                // 用id记录是第几个 todo：位置还有问题
-                                                i++;
-                                                if (!dayNumMp.get(item.id) || dayNumMp.get(item.id) < i) {
-                                                    dayNumMp.set(item.id, i);
-                                                }
-                                            // 用于储存本周每天的全天日程的数量
-                                            maxNUm.push(i);
-                                        }
-                                    })
-                                });
-                                let scheduleStyle = {
-                                    borderLeft: `2px solid ${item.borderColor}`,
-                                    color: item.color,
-                                    height: '26px',
-                                    lineHeight: '26px',
-                                    width: `calc(${(endNumCopies - startNumCopies) / totalCopies} * 100%)`,
-                                    left: `${(startNumCopies / totalCopies) * alldayWidth}px`,
-                                    top: `${(dayNumMp.get(item.id) - 1) * 26 + (dayNumMp.get(item.id) - 1)}px`,
-                                    backgroundColor: item.bgColor,
-                                    ...item.customStyle,
+                    {
+                        alldaySchedules.map((item, index) => {
+                            // 不在本周范围内
+                            if (item.end <= weekdayStart || item.start >= weekdayEnd) {
+                                return;
+                            }
+                            // 按照小时把七天分成 7 * 24 份
+                            // 开始时间的占的份数
+                            const startNumCopies = dayjs.unix(item.start).diff(dayjs.unix(weekdayStart), 'hour');
+                            // 结束时间的占的份数
+                            const endNumCopies = dayjs.unix(item.end).diff(dayjs.unix(weekdayStart), 'hour');
+                            //
+                            const {sameTimeMaxScheduleNum, sameTimeScheduleIndex} = handleSchedulePlace(item.id);
+                            
+                            let scheduleStyle = {
+                                borderLeft: `2px solid ${item.borderColor}`,
+                                color: item.color,
+                                height: '26px',
+                                lineHeight: '26px',
+                                width: `calc(${(endNumCopies - startNumCopies) / totalCopies} * 100%)`,
+                                left: `${(startNumCopies / totalCopies) * alldayWidth}px`,
+                                top: `${(sameTimeScheduleIndex - 1) * 26 + (sameTimeScheduleIndex - 1)}px`,
+                                backgroundColor: item.bgColor,
+                                ...item.customStyle,
+                            }
+                            
+                            sameNumRef.current = sameTimeMaxScheduleNum;
+                            
+                            return (<Fragment key={item.id}>
+                                {
+                                    renderAllSchedule(sameTimeScheduleIndex, scheduleStyle, item)
                                 }
                                 
-                                // if (sameTimeNum > 3 && !isShowMoreSchedules) return;
-                                // const top = !isShowMoreSchedules ? 3 * 26 : sameTimeNum * 26;
-                                // moreTop = top;
-                                
-                                sameNumRef.current = maxNUm;
-                                return (
-                                    <div 
-                                        key={index}
-                                        date-type="schedule"
-                                        className="rm-calendar-week-allday-schedule"
-                                        style={scheduleStyle}
-                                        onClick={(e) => handleClickSchedule(e, item)}
-                                        onContextMenu={(e) => handleContextMenu(e, item)}
-                                    >
-                                        <span date-type="schedule" className="rm-calendar-week-allday-schedule-title">
-                                            {item.title}
-                                        </span>
-                                    </div>
-                                )
-                            })
-                        }
-                        {/* {
-                            weekAlldaySchedules.map((item, index) => {
-                                return (
-                                    sameTimeNum > 3 && item.start === dayStart && <div date-type="more" key={index} style={{top: `${moreTop + 2}px`}} className="rm-calendar-week-allday-schedules-num">
-                                    <span date-type="more" onClick={handleClickMore} className="rm-calendar-allday-week-schedules-num-text">{isShowMoreSchedules ? '收起' : `还有${sameTimeNum - 3}项`}</span>
-                                </div>
-                                )
-                            })
-                        } */}
-                    </div>
-                    
+                            </Fragment>)
+                        })
+                    }
                 </div>
             </div>}
             <Common 
