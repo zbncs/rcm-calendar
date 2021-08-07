@@ -1,0 +1,85 @@
+.rm-calendar-month {
+    width: 100%;
+    height: 614px;
+    position: relative;
+    overflow: hidden;
+    .rm-calendar-month-date-week {
+        display: flex;
+        height: 42px;
+        border-top: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
+        line-height: 40px;
+        .rm-calendar-month-dayname-item {
+            width: calc(100% / 7);
+            padding-left: 10px;
+        }
+    }
+    .rm-calendar-month-week {
+        display: flex;
+        width: 100%;
+        height: calc((100% - 42px) / 6);
+        .rm-calendar-month-week-item {
+            border: 1px solid #e5e5e5;
+            border-top: none;
+            border-left: none;
+            width: calc(100% / 7);
+            height: 100%;
+            padding: 3px;
+            .rm-calendar-month-week-item-header-date {
+                display: inline-block;
+                font-size: 16px;
+                color: #333;
+                font-weight: 700;
+                width: 26px;
+                height: 26px;
+                text-align: center;
+                line-height: 26px;
+            }
+            .rm-calendar-month-week-item-today {
+                border-radius: 50%;
+                background-color: rgb(0, 89, 255);
+                color: #fff;
+            }
+            .rm-calendar-month-week-item-header-dayCn {
+                font-size: 12px;
+                color: #aaa;
+            }
+            .rm-calendar-month-week-item-schedules {
+                height: calc(100% - 40px);
+            }
+        }
+    }
+
+    .rm-calendar-month-week-item-schedules-container {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        .rm-calendar-month-week-schedules-item {
+            position: absolute;
+            height: 18px;
+            overflow: hidden;
+            line-height: 18px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            z-index: 9999;
+            .rm-calendar-month-week-schedules-title {
+                margin-left: 2px;
+            }
+        }
+
+        .rm-calendar-month-week-item-schedules-num {
+            display: inline-block;
+            height: 14px;
+            line-height: 14px;
+            color: rgb(0, 89, 255);
+            text-align: center;
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            cursor: pointer;
+        }
+    }
+}
