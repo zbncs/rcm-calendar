@@ -46,6 +46,20 @@ const App = () => (
 );
 ```
 
+## example
+
+day:
+
+![avatar](https://zbncs.github.io/rcm-calendar/img/day.png)
+
+week:
+
+![avatar](https://zbncs.github.io/rcm-calendar/img/week.png)
+
+month:
+
+![avatar](https://zbncs.github.io/rcm-calendar/img/month.png)
+
 ## API
 
 日历视图的属性说明如下：
