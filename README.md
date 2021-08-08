@@ -50,15 +50,15 @@ const App = () => (
 
 day:
 
-![avatar](https://raw.githubusercontent.com/zbncs/rcm-calendar/main/example/img/day.png)
+![avatar](https://zbncs.github.io/rcm-calendar/img/day.png)
 
 week:
 
-![avatar](https://raw.githubusercontent.com/zbncs/rcm-calendar/main/example/img/week.png)
+![avatar](https://zbncs.github.io/rcm-calendar/img/week.png)
 
 month:
 
-![avatar](https://raw.githubusercontent.com/zbncs/rcm-calendar/main/example/img/month.png)
+![avatar](https://zbncs.github.io/rcm-calendar/img/month.png)
 
 
 
