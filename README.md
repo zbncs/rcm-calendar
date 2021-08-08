@@ -46,6 +46,22 @@ const App = () => (
 );
 ```
 
+## example
+
+day:
+
+![avatar](./example/img/day.png)
+
+week:
+
+![avatar](./example/img/week.png)
+
+month:
+
+![avatar](./example/img/month.png)
+
+
+
 ## API
 
 日历视图的属性说明如下：
