@@ -1,0 +1,34 @@
+
+.rm-calendar-operate-container {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  .rm-calendar-next-day,
+  .rm-calendar-prev-day,
+  .rm-calendar-today-day,
+  .rm-calendar-day-btn,
+  .rm-calendar-week-btn,
+  .rm-calendar-month-btn {
+    display: inline-block;
+    color: blue;
+    cursor: pointer;
+    width: 48px;
+    height: 20px;
+    line-height: 18px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin-right: 6px;
+  }
+  .rm-calendar-btn-container {
+    margin-right: 12px;
+    margin-left: 40px;
+  }
+  .rm-calendar-warn {
+    color: red;
+    font-size: 18px;
+    margin-right: 120px;
+  }
+}

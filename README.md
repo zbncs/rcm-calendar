@@ -48,6 +48,8 @@ const App = () => (
 
 ## example
 
+demo: [demo](https://zbncs.github.io/rcm-calendar/build/index.html)
+
 day:
 
 ![avatar](https://zbncs.github.io/rcm-calendar/img/day.png)
